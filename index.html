@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unidata city audit</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
+      color: #0f172a;
+      background: #e2e8f0;
+      --border: #cbd5e1;
+      --header-bg: #1e293b;
+      --header-fg: #f8fafc;
+      --stripe: #f8fafc;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 28px 20px 40px; max-width: 1400px; margin-inline: auto; }
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+      color: #0f172a;
+    }
+    .meta { color: #475569; font-size: 0.9rem; margin: 0 0 20px; line-height: 1.45; }
+    .legend {
+      margin: 14px 0 0;
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.4;
+    }
+    .empty { color: #64748b; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .wrap {
+      overflow: auto;
+      max-height: min(78vh, 900px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+    }
+    table.audit {
+      border-collapse: separate;
+      border-spacing: 0;
+      width: 100%;
+      min-width: 960px;
+      font-size: 0.8125rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .audit th,
+    .audit td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: middle;
+    }
+    .audit thead th {
+      background: var(--header-bg);
+      color: var(--header-fg);
+      font-weight: 600;
+      text-align: right;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      border-bottom: 2px solid #0f172a;
+      white-space: nowrap;
+    }
+    .audit thead th.col-city {
+      text-align: left;
+      left: 0;
+      z-index: 3;
+      min-width: 9rem;
+    }
+    .audit tbody td.col-city {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      text-align: left;
+      font-weight: 600;
+      background: #fff;
+      border-right: 1px solid #e2e8f0;
+      box-shadow: 4px 0 12px -4px rgba(15,23,42,0.12);
+    }
+    .audit tbody tr:nth-child(even) td.col-city { background: var(--stripe); }
+    .audit tbody tr:hover td { background: #eff6ff !important; }
+    .audit tbody tr:hover td.col-city { background: #dbeafe !important; }
+    .audit .col-num { text-align: right; }
+    .audit tbody tr:nth-child(even) td:not(.col-city) { background: var(--stripe); }
+    .delta-pos { color: #b45309; font-weight: 600; }
+    .delta-neg { color: #15803d; font-weight: 600; }
+    .delta-zero { color: #64748b; }
+    .city { letter-spacing: 0.01em; }
+  </style>
+</head>
+<body>
+  <h1>City audit summary</h1>
+  <p class="meta">Unidata vs GeoPackage expected parcel counts by city, plus counts of rows with missing hazard or footprint fields.</p>
+  
+        <div class="wrap" role="region" aria-label="City audit table" tabindex="0">
+          <table class="audit">
+            <caption class="sr-only">City audit: row counts versus GeoPackage expected counts and empty-field tallies</caption>
+            <thead><tr><th class="col-city" scope="col">city</th><th class="col-num" scope="col">unidata_rows</th><th class="col-num" scope="col">expected_gpkg_rows</th><th class="col-num" scope="col">row_delta</th><th class="col-num" scope="col">footprints_empty</th><th class="col-num" scope="col">building_area_empty</th><th class="col-num" scope="col">fldzone_empty</th><th class="col-num" scope="col">alquist_fault_empty</th><th class="col-num" scope="col">liquefaction_empty</th><th class="col-num" scope="col">landslide_empty</th><th class="col-num" scope="col">fhzora_empty</th><th class="col-num" scope="col">fhzlra_empty</th></tr></thead>
+            <tbody>
+              <tr><td class="col-city"><span class="city">Los Gatos</span></td><td class="col-num">315</td><td class="col-num">2593</td><td class="col-num delta-neg">-2278</td><td class="col-num">0</td><td class="col-num">109</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">313</td></tr>
+<tr><td class="col-city"><span class="city">Morgan Hill</span></td><td class="col-num">1445</td><td class="col-num">2654</td><td class="col-num delta-neg">-1209</td><td class="col-num">0</td><td class="col-num">471</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">418</td><td class="col-num">1011</td></tr>
+<tr><td class="col-city"><span class="city">San Jose</span></td><td class="col-num">422986</td><td class="col-num">455695</td><td class="col-num delta-neg">-32709</td><td class="col-num">13</td><td class="col-num">381</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">421659</td><td class="col-num">811</td></tr>
+<tr><td class="col-city"><span class="city">San Ramon</span></td><td class="col-num">353</td><td class="col-num">1909</td><td class="col-num delta-neg">-1556</td><td class="col-num">0</td><td class="col-num">237</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">287</td></tr>
+<tr><td class="col-city"><span class="city">Santa Clara</span></td><td class="col-num">33494</td><td class="col-num">38705</td><td class="col-num delta-neg">-5211</td><td class="col-num">0</td><td class="col-num">100</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">0</td><td class="col-num">30993</td><td class="col-num">1424</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="legend"><strong>row_delta</strong> = <strong>unidata_rows</strong> - <strong>expected_gpkg_rows</strong> (negative means fewer Unidata rows than the parcel GeoPackage for that city).</p>
+        
+</body>
+</html>
